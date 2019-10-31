@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Counter should render 1`] = `
+<div>
+  <button
+    onClick={[Function]}
+  >
+    Increment async
+  </button>
+   
+  <button
+    onClick={[Function]}
+  >
+    Increment
+  </button>
+   
+  <button
+    onClick={[Function]}
+  >
+    Decrement
+  </button>
+  <hr />
+  <div>
+    Counter: 
+    0
+  </div>
+</div>
+`;

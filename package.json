@@ -1,0 +1,43 @@
+{
+  "name": "comments-app",
+  "version": "0.1.0",
+  "description": "Comments app",
+  "main": "src/ts/app.js",
+  "scripts": {
+    "dev": "parcel serve ./index.html",
+    "test": "jest",
+    "ts:check": "tsc --noEmit",
+    "ts:clean": "rm -rf ./dist",
+    "ts:build": "yarn ts:clean && yarn ts:check && cross-env NODE_ENV=production parcel build ./index.html --public-url .",
+    "lint": "eslint"
+  },
+  "author": "Rob Crawford",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robCrawford/comments-app"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/react-dom": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.26.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^26.6.3",
+    "parcel-bundler": "^1.12.5",
+    "redux-devtools-extension": "^2.13.9",
+    "ts-jest": "^26.5.6",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.0",
+    "redux-saga": "^1.1.3"
+  }
+}

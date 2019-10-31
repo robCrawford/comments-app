@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "target": "es5",
+    "module": "commonjs",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "strict": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "removeComments": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "contracts": ["contracts"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "contracts/**/*",
+  ],
+  "exclude": [
+    ".git",
+    "node_modules"
+  ]
+}

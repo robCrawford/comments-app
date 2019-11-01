@@ -20,6 +20,7 @@
     "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
+    "babel-polyfill": "^6.26.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "redux": "^4.0.4",
@@ -38,8 +39,7 @@
     "eslint-plugin-react": "^7.16.0",
     "jest": "^24.9.0",
     "prop-types": "^15.7.2",
-    "tap-spec": "^5.0.0",
-    "tape": "^4.11.0"
+    "tap-spec": "^5.0.0"
   },
   "jest": {
     "setupFiles": [

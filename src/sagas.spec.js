@@ -1,9 +1,13 @@
-// import test from 'tape';
+import 'babel-polyfill';
+import React from 'react';
+import { shallow } from 'enzyme';
+import {runSaga} from 'redux-saga';
+import Counter from './Counter';
 
+import { put, call } from 'redux-saga/effects';
+import { incrementAsync, delay } from './sagas';
 
 // https://dev.to/phil/the-best-way-to-test-redux-sagas-4hib
-// import {runSaga} from 'redux-saga';
-
 // async function recordSaga(saga, initialAction) {
 //   const dispatched = [];
 
@@ -18,39 +22,6 @@
 //   return dispatched;
 // }
 
-
-
-/* import { put, call } from 'redux-saga/effects';
-import { incrementAsync, delay } from './sagas';
-
-test('incrementAsync Saga test', (assert) => {
-  const gen = incrementAsync();
-
-  assert.deepEqual(
-    gen.next().value,
-    call(delay, 1000),
-    'incrementAsync Saga must call delay(1000)'
-  );
-
-  assert.deepEqual(
-    gen.next().value,
-    put({type: 'INCREMENT'}),
-    'incrementAsync Saga must dispatch an INCREMENT action'
-  );
-
-  assert.deepEqual(
-    gen.next(),
-    { done: true, value: undefined },
-    'incrementAsync Saga must be done'
-  );
-
-  assert.end();
-}); */
-
-import React from 'react';
-import { shallow } from 'enzyme';
-import Counter from './Counter';
-
 describe('Counter', () => {
   it('should render', () => {
     const component = shallow(<Counter
@@ -61,5 +32,22 @@ describe('Counter', () => {
 
     expect(component).toMatchSnapshot();
   });
+});
+
+describe('incrementAsync Saga', () => {
+  const gen = incrementAsync();
+
+  it ('must call delay(1000)', () => {
+    expect(gen.next().value).toEqual(call(delay, 1000));
+  });
+
+  it ('must then dispatch an INCREMENT action', () => {
+    expect(gen.next().value).toEqual(put({type: 'INCREMENT'}));
+  });
+
+  it ('must then be done', () => {
+    expect(gen.next()).toEqual({ done: true, value: undefined });
+  });
+
 });
 

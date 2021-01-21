@@ -1,12 +1,36 @@
-export default function counter(state = 0, action) {
-  switch (action.type) {
+const initialState = {
+  count: 0,
+  loading: false
+};
+
+export default function counter( state = initialState, { type, payload } ) {
+  switch (type) {
+    case 'SET':
+      return {
+        ...state,
+        count: Number(payload)
+      };
     case 'INCREMENT':
-      return state + 1
-    case 'INCREMENT_IF_ODD':
-      return (state % 2 !== 0) ? state + 1 : state
+      return {
+        ...state,
+        count: state.count + 1
+      };
     case 'DECREMENT':
-      return state - 1
+      return {
+        ...state,
+        count: state.count - 1
+      };
+    case 'LOADING':
+      return {
+        ...state,
+        loading: true
+      };
+    case 'CLEAR_LOADING':
+      return {
+        ...state,
+        loading: false
+      };
     default:
-      return state
+      return state;
   }
 }

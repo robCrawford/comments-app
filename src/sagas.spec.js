@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import { shallow } from 'enzyme';
-import {runSaga} from 'redux-saga';
+// import {runSaga} from 'redux-saga';
 import Counter from './Counter';
 
 import { put, call } from 'redux-saga/effects';

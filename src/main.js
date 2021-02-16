@@ -5,29 +5,40 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { all } from 'redux-saga/effects';
 
-import Counter from './Counter';
-import reducer from './reducers';
-import rootSaga from './sagas';
-
+import Counter from './counter/Counter';
+import { counterReducer, incrementCounter, decrementCounter, syncCounter } from './counter/counter-redux';
+import { watchSyncCounter } from './counter/counter-saga';
+import { Provider } from "react-redux";
 
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(reducer, composeWithDevTools(
+const store = createStore(counterReducer, composeWithDevTools(
   applyMiddleware(sagaMiddleware),
 ));
+
+function init() {
+  console.log('init');
+}
+
+export default function* rootSaga() {
+  yield all([
+    init(),
+    watchSyncCounter()
+  ]);
+}
 
 sagaMiddleware.run(rootSaga);
 
 function render() {
-  const { count, loading } = store.getState();
 
   ReactDOM.render(
-    <Counter
-      value={count}
-      loading={loading}
-      onIncrement={() => store.dispatch({type: 'INCREMENT'})}
-      onDecrement={() => store.dispatch({type: 'DECREMENT'})}
-      onIncrementAsync={() => store.dispatch({type: 'SET_FROM_API'})} />,
+    <Provider store={store}>
+      <Counter
+        onIncrement={() => store.dispatch(incrementCounter())}
+        onDecrement={() => store.dispatch(decrementCounter())}
+        onIncrementAsync={() => store.dispatch(syncCounter())} />
+    </Provider>,
     document.getElementById('root')
   );
 }

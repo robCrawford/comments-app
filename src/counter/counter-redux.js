@@ -3,7 +3,16 @@ const initialState = {
   loading: false
 };
 
-export default function counter( state = initialState, { type, payload } ) {
+export const incrementCounter = () => ({type: 'INCREMENT'});
+export const decrementCounter = () => ({type: 'DECREMENT'});
+export const syncCounter = () => ({type: 'SYNC_COUNTER'});
+
+export const counterSelector = state => ({
+  count: state.count,
+  loading: state.loading
+});
+
+export function counterReducer( state = initialState, { type, payload } ) {
   switch (type) {
     case 'SET':
       return {

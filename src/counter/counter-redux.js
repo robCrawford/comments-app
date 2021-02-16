@@ -1,45 +1,48 @@
-const initialState = {
-  count: 0,
-  loading: false
+export const counterActions = {
+  SET: 'counter/SET',
+  INCREMENT: 'counter/INCREMENT',
+  DECREMENT: 'counter/DECREMENT',
+  SYNC: 'counter/SYNC'
 };
 
-export const incrementCounter = () => ({type: 'INCREMENT'});
-export const decrementCounter = () => ({type: 'DECREMENT'});
-export const syncCounter = () => ({type: 'SYNC_COUNTER'});
-
-export const counterSelector = state => ({
-  count: state.count,
-  loading: state.loading
-});
+const initialState = {
+  count: 0
+};
 
 export function counterReducer( state = initialState, { type, payload } ) {
   switch (type) {
-    case 'SET':
+    case counterActions.SET: {
       return {
         ...state,
         count: Number(payload)
       };
-    case 'INCREMENT':
+    }
+    case counterActions.INCREMENT: {
       return {
         ...state,
         count: state.count + 1
       };
-    case 'DECREMENT':
+    }
+    case counterActions.DECREMENT: {
       return {
         ...state,
         count: state.count - 1
       };
-    case 'LOADING':
-      return {
-        ...state,
-        loading: true
-      };
-    case 'CLEAR_LOADING':
-      return {
-        ...state,
-        loading: false
-      };
-    default:
+    }
+    default: {
       return state;
+    }
   }
 }
+
+// Action Creators
+export const setCounter = (payload) => ({type: counterActions.SET, payload});
+export const incrementCounter = () => ({type: counterActions.INCREMENT});
+export const decrementCounter = () => ({type: counterActions.DECREMENT});
+export const syncCounter = () => ({type: counterActions.SYNC});
+
+// Selectors
+export const counterSelector = ({ counter }) => ({
+  count: counter.count,
+  loading: counter.loading
+});

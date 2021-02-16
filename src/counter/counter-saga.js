@@ -1,16 +1,17 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
+import { appActions } from '../app/app-redux';
 import { fetchCounter } from '../services/counter';
+import { setCounter, counterActions } from './counter-redux';
 
 // Worker Saga
 export function* sync() {
-  yield put({ type: 'LOADING' });
+  yield put({ type: appActions.LOADING_START });
   const result = yield call(fetchCounter);
-  yield put({ type: 'SET', 'payload': result });
-  yield put({ type: 'CLEAR_LOADING' });
+  yield put(setCounter(result));
+  yield put({ type: appActions.LOADING_END });
 }
 
 // Watcher Saga
 export function* watchSyncCounter() {
-  yield takeEvery('SYNC_COUNTER', sync);
+  yield takeEvery(counterActions.SYNC, sync);
 }
-

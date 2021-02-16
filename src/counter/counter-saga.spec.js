@@ -3,15 +3,17 @@ import 'babel-polyfill';
 import { put, call } from 'redux-saga/effects';
 import { sync } from './counter-saga';
 import { fetchCounter } from '../services/counter';
+import { appActions } from '../app/app-redux';
+import { counterActions } from './counter-redux';
 
 describe('sync Saga', () => {
-  const g = sync();
+  const gen = sync();
 
   it ('should fetch and set counter', () => {
-    expect(g.next().value).toEqual(put({type: 'LOADING'}));
-    expect(g.next().value).toEqual(call(fetchCounter));
-    expect(g.next().value).toEqual(put({type: 'SET'}));
-    expect(g.next().value).toEqual(put({type: 'CLEAR_LOADING'}));
-    expect(g.next()).toEqual({ done: true });
+    expect(gen.next().value).toEqual(put({type: appActions.LOADING_START}));
+    expect(gen.next().value).toEqual(call(fetchCounter));
+    expect(gen.next().value).toEqual(put({type: counterActions.SET}));
+    expect(gen.next().value).toEqual(put({type: appActions.LOADING_END}));
+    expect(gen.next()).toEqual({ done: true });
   });
 });

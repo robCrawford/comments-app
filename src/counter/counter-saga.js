@@ -5,13 +5,13 @@ import { setCounter, counterActions } from './counter-redux';
 
 // Worker Saga
 export function* sync() {
-  yield put({ type: appActions.LOADING_START });
+  yield put({ type: appActions.LOADING_STARTED });
   const result = yield call(fetchCounter);
   yield put(setCounter(result));
-  yield put({ type: appActions.LOADING_END });
+  yield put({ type: appActions.LOADING_ENDED });
 }
 
 // Watcher Saga
 export function* watchSyncCounter() {
-  yield takeEvery(counterActions.SYNC, sync);
+  yield takeEvery(counterActions.SYNCED, sync);
 }

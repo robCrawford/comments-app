@@ -10,10 +10,10 @@ describe('sync Saga', () => {
   const gen = sync();
 
   it ('should fetch and set counter', () => {
-    expect(gen.next().value).toEqual(put({type: appActions.LOADING_START}));
+    expect(gen.next().value).toEqual(put({type: appActions.LOADING_STARTED}));
     expect(gen.next().value).toEqual(call(fetchCounter));
-    expect(gen.next().value).toEqual(put({type: counterActions.SET}));
-    expect(gen.next().value).toEqual(put({type: appActions.LOADING_END}));
+    expect(gen.next().value).toEqual(put({type: counterActions.UPDATED}));
+    expect(gen.next().value).toEqual(put({type: appActions.LOADING_ENDED}));
     expect(gen.next()).toEqual({ done: true });
   });
 });

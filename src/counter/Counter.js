@@ -21,10 +21,9 @@ const Counter = ({ onIncrement, onDecrement, onSync }) => {
     <button onClick={handleSync}>
       { loading ? 'Loading...' : 'Sync' }
     </button>
-    <hr />
-    <div>
+    <p>
       Counter: {count}
-    </div>
+    </p>
   </div>);
 };
 

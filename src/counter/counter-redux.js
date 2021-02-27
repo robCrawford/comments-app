@@ -1,8 +1,8 @@
 export const counterActions = {
-  SET: 'counter/SET',
-  INCREMENT: 'counter/INCREMENT',
-  DECREMENT: 'counter/DECREMENT',
-  SYNC: 'counter/SYNC'
+  UPDATED: 'counter/UPDATED',
+  INCREMENTED: 'counter/INCREMENTED',
+  DECREMENTED: 'counter/DECREMENTED',
+  SYNCED: 'counter/SYNCED'
 };
 
 const initialState = {
@@ -11,19 +11,19 @@ const initialState = {
 
 export function counterReducer( state = initialState, { type, payload } ) {
   switch (type) {
-    case counterActions.SET: {
+    case counterActions.UPDATED: {
       return {
         ...state,
         count: Number(payload)
       };
     }
-    case counterActions.INCREMENT: {
+    case counterActions.INCREMENTED: {
       return {
         ...state,
         count: state.count + 1
       };
     }
-    case counterActions.DECREMENT: {
+    case counterActions.DECREMENTED: {
       return {
         ...state,
         count: state.count - 1
@@ -36,10 +36,10 @@ export function counterReducer( state = initialState, { type, payload } ) {
 }
 
 // Action Creators
-export const setCounter = (payload) => ({type: counterActions.SET, payload});
-export const incrementCounter = () => ({type: counterActions.INCREMENT});
-export const decrementCounter = () => ({type: counterActions.DECREMENT});
-export const syncCounter = () => ({type: counterActions.SYNC});
+export const setCounter = (payload) => ({type: counterActions.UPDATED, payload});
+export const incrementCounter = () => ({type: counterActions.INCREMENTED});
+export const decrementCounter = () => ({type: counterActions.DECREMENTED});
+export const syncCounter = () => ({type: counterActions.SYNCED});
 
 // Selectors
 export const counterSelector = ({ counter }) => ({

@@ -1,6 +1,6 @@
 export const appActions = {
-  LOADING_START: 'app/LOADING_START',
-  LOADING_END: 'app/LOADING_END',
+  LOADING_STARTED: 'app/LOADING_STARTED',
+  LOADING_ENDED: 'app/LOADING_ENDED',
 };
 
 const initialState = {
@@ -9,12 +9,12 @@ const initialState = {
 
 export const appReducer = (state = initialState, { type }) => {
   switch (type) {
-    case appActions.LOADING_START:
+    case appActions.LOADING_STARTED:
       return {
         ...state,
         loading: true
       };
-    case appActions.LOADING_END:
+    case appActions.LOADING_ENDED:
       return {
         ...state,
         loading: false

@@ -12,6 +12,13 @@
     "declaration": false,
     "esModuleInterop": true,
     "removeComments": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noEmit": true,
     "baseUrl": ".",
     "paths": {

@@ -1,5 +1,5 @@
 /*eslint-disable no-unused-vars */
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { appSelector } from '../app/app-redux';
 import { counterSelector } from './counter-redux';
@@ -7,12 +7,23 @@ import { counterSelector } from './counter-redux';
 type Props = {
   onIncrement: () => void;
   onDecrement: () => void;
-  onSync: () => void;
+  onSync: (n: number) => void;
 };
+
+let syncId = 1;
 
 const Counter: FC<Props> = ({ onIncrement, onDecrement, onSync }) => {
   const { count } = useSelector(counterSelector);
   const { loading } = useSelector(appSelector);
+
+  useEffect(() => {
+    // Test many sagas series/parallel
+    onSync(syncId++);
+    onSync(syncId++);
+    onSync(syncId++);
+    onSync(syncId++);
+  }, []);
+
   const handleIncrement = (): void => {
     !loading && onIncrement();
   };
@@ -20,7 +31,9 @@ const Counter: FC<Props> = ({ onIncrement, onDecrement, onSync }) => {
     !loading && onDecrement();
   };
   const handleSync = (): void => {
-    !loading && onSync();
+    if (!loading) {
+      onSync(syncId++);
+    }
   };
 
   return (<div>

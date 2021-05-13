@@ -7,7 +7,7 @@ export const appActionTypes = {
 } as const;
 
 type AppState = {
-  loading: boolean;
+  loading: number;
 };
 
 export type AppModuleState = {
@@ -19,7 +19,7 @@ type AppActionType = ValueOf<typeof appActionTypes>;
 type AppAction = Action<AppActionType>;
 
 const initialState: AppState = {
-  loading: false
+  loading: 0
 };
 
 export const appReducer = (state = initialState, { type }: AppAction): AppState => {
@@ -27,12 +27,12 @@ export const appReducer = (state = initialState, { type }: AppAction): AppState 
     case appActionTypes.LOADING_STARTED:
       return {
         ...state,
-        loading: true
+        loading: state.loading + 1
       };
     case appActionTypes.LOADING_ENDED:
       return {
         ...state,
-        loading: false
+        loading: state.loading - 1
       };
     default: {
       return state;
@@ -44,5 +44,9 @@ export const appReducer = (state = initialState, { type }: AppAction): AppState 
 export const appSelector = ({ app }: AppModuleState): {
   loading: boolean;
 } => ({
-  loading: app.loading
+  loading: app.loading > 0
 });
+
+// Action creators
+export const startLoading = (): AppAction => ({type: appActionTypes.LOADING_STARTED});
+export const endLoading = (): AppAction => ({type: appActionTypes.LOADING_ENDED});

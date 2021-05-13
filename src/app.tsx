@@ -27,10 +27,12 @@ const store = createStore(rootReducer, composeWithDevTools(
 ));
 
 function* rootSaga(): Generator {
+  console.warn('rootSaga start');
   yield all([
-    init(),
+    init(), // Delay, resolves after 1s
     fork(watchSyncCounter)
   ]);
+  console.warn('rootSaga generator is done');
 }
 sagaMiddleware.run(rootSaga);
 
@@ -44,8 +46,8 @@ function render(): void {
         onDecrement={(): void => {
           store.dispatch(decrementCounter());
         }}
-        onSync={(): void => {
-          store.dispatch(syncCounter());
+        onSync={(id: number): void => {
+          store.dispatch(syncCounter(id));
         }}
       />
       <hr />

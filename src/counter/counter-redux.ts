@@ -1,6 +1,5 @@
 import { Action } from 'redux';
 import { PayloadAction } from '../../contracts/Redux';
-import { ValueOf } from '../../contracts/Utils';
 
 export const counterActionTypes = {
   UPDATED: 'counter/UPDATED',
@@ -11,23 +10,25 @@ export const counterActionTypes = {
 
 type CounterState = {
   count: number;
-  loading: boolean;
 };
 
 export type CounterModuleState = {
   counter: CounterState;
 };
 
-type CounterActionType = ValueOf<typeof counterActionTypes>;
+export type SetCounterAction = PayloadAction<number, typeof counterActionTypes.UPDATED>;
+export type IncrementCounterAction = Action<typeof counterActionTypes.INCREMENTED>;
+export type DecrementCounterAction = Action<typeof counterActionTypes.DECREMENTED>;
+export type SyncCounterAction = PayloadAction<{ id: number }, typeof counterActionTypes.SYNCED>;
 
-type CounterAction =
-  | Action<CounterActionType>
-  | PayloadAction<number, CounterActionType>;
-
+export type CounterAction =
+  | SetCounterAction
+  | IncrementCounterAction
+  | DecrementCounterAction
+  | SyncCounterAction;
 
 const initialState: CounterState = {
-  count: 0,
-  loading: false
+  count: 0
 };
 
 export function counterReducer( state = initialState, action: CounterAction ): CounterState {
@@ -35,12 +36,10 @@ export function counterReducer( state = initialState, action: CounterAction ): C
 
   switch (type) {
     case counterActionTypes.UPDATED: {
-      if ('payload' in action) {
-        return {
-          ...state,
-          count: action.payload
-        };
-      }
+      return ('payload' in action && typeof action.payload === 'number') ? {
+        ...state,
+        count: action.payload
+      }: state;
     }
     case counterActionTypes.INCREMENTED: {
       return {
@@ -61,17 +60,20 @@ export function counterReducer( state = initialState, action: CounterAction ): C
 }
 
 // Action Creators
-export const setCounter = (payload: number): PayloadAction<number, CounterActionType> =>
-  ({type: counterActionTypes.UPDATED, payload});
-export const incrementCounter = (): Action<CounterActionType> => ({type: counterActionTypes.INCREMENTED});
-export const decrementCounter = (): Action<CounterActionType> => ({type: counterActionTypes.DECREMENTED});
-export const syncCounter = (): Action<CounterActionType> => ({type: counterActionTypes.SYNCED});
+export function setCounter(payload: number): SetCounterAction {
+  return { type: counterActionTypes.UPDATED, payload };
+}
+export function incrementCounter(): IncrementCounterAction {
+  return { type: counterActionTypes.INCREMENTED };
+}
+export function decrementCounter(): DecrementCounterAction {
+  return { type: counterActionTypes.DECREMENTED };
+}
+export function syncCounter(id: number): SyncCounterAction {
+  return { type: counterActionTypes.SYNCED, payload: { id } };
+}
 
 // Selectors
-export const counterSelector = ({ counter }: CounterModuleState): {
-  count: number;
-  loading: boolean;
-} => ({
-  count: counter.count,
-  loading: counter.loading
-});
+export function counterSelector({ counter }: CounterModuleState): { count: number } {
+  return { count: counter.count };
+}

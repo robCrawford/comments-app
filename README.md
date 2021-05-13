@@ -2,7 +2,7 @@
 
 ```
 yarn
-yarn start
+yarn dev
 
 yarn test
 ```
